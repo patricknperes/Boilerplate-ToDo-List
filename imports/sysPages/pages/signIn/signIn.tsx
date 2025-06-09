@@ -42,7 +42,7 @@ const SignInPage: React.FC = () => {
 					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
 						{'{'}
 					</Typography>
-					Boilerplate
+					Patrick
 					<Typography variant="inherit" color="sysText.tertiary">
 						{'}'}
 					</Typography>
