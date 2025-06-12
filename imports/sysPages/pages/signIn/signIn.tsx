@@ -12,11 +12,14 @@ import SysIcon from '../../../ui/components/sysIcon/sysIcon';
 import AuthContext, { IAuthContext } from '/imports/app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+
 const SignInPage: React.FC = () => {
 	const { showNotification } = useContext(AppLayoutContext);
 	const { user, signIn } = useContext<IAuthContext>(AuthContext);
 	const navigate = useNavigate();
-	const { Container, Content, FormContainer, FormWrapper } = SignInStyles;
+	const { Container, Content, FormContainer, FormWrapper, LoginHeader, LoginLabel, ForgotPasswordButton } = SignInStyles;
 
 	const handleSubmit = ({ email, password }: { email: string; password: string }) => {
 		signIn(email, password, (err) => {
@@ -27,9 +30,11 @@ const SignInPage: React.FC = () => {
 				message: 'Email ou senha inválidos',
 			});
 		});
-;	};
+		;
+	};
 
 	const handleForgotPassword = () => navigate('/password-recovery');
+	const handleSignUp = () => navigate('/signup');
 
 	useEffect(() => {
 		if (user) navigate('/');
@@ -38,34 +43,51 @@ const SignInPage: React.FC = () => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1}>
-					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
-						{'{'}
-					</Typography>
-					Patrick
-					<Typography variant="inherit" color="sysText.tertiary">
-						{'}'}
-					</Typography>
-				</Typography>
-
+				<LoginHeader>
+					<LoginLabel>
+						Login
+					</LoginLabel>
+				</LoginHeader>
 				<FormContainer>
-					<Typography variant="h5">Acesse o sistema</Typography>
 					<SysForm schema={signInSchema} onSubmit={handleSubmit} debugAlerts={false}>
 						<FormWrapper>
-							<SysTextField name="email" label="Email" fullWidth placeholder="Digite seu email" />
-							<SysTextField label="Senha" fullWidth name="password" placeholder="Digite sua senha" type="password" />
-							<Button variant="text" sx={{ alignSelf: 'flex-end' }} onClick={handleForgotPassword}>
-								<Typography variant="link">Esqueci minha senha</Typography>
-							</Button>
+							<SysTextField
+								variant="outlined"
+								name="email"
+								label="Email"
+								fullWidth
+								placeholder="Digite seu email"
+								endAdornment={
+									<EmailIcon />
+								}
+							/>
+							<SysTextField
+								variant="outlined"
+								label="Senha"
+								fullWidth
+								name="password"
+								placeholder="Digite sua senha"
+								type="password"
+								endAdornment={
+									<LockIcon />
+								}
+							/>
+							<ForgotPasswordButton variant="text" sx={{ alignSelf: 'flex-end' }} onClick={handleForgotPassword}>
+								<Typography variant="link" sx={{ textDecoration: 'none' }}>Esqueceu sua senha?</Typography>
+							</ForgotPasswordButton>
 							<Box />
-							<SysFormButton variant="contained" color="primary" endIcon={<SysIcon name={'arrowForward'} />}>
+							<SysFormButton
+								variant="contained"
+								color="primary"
+								endIcon={<SysIcon name={'arrowForward'} />}>
 								Entrar
 							</SysFormButton>
+							<ForgotPasswordButton variant="text" sx={{ alignSelf: 'center' }} onClick={handleSignUp}>
+								<Typography variant="link" sx={{ textDecoration: 'none' }}>Não possui conta? Cadastrar</Typography>
+							</ForgotPasswordButton>
 						</FormWrapper>
 					</SysForm>
 				</FormContainer>
-
-				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
 			</Content>
 		</Container>
 	);
