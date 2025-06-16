@@ -33,7 +33,7 @@ interface ISysTextFieldProps extends ISysFormComponent<TextFieldProps> {
 
 const SysTextField: React.FC<ISysTextFieldProps> = ({
 	name,
-	label,
+	label: propLabel,
 	value,
 	defaultValue,
 	onChange,
@@ -62,7 +62,7 @@ const SysTextField: React.FC<ISysTextFieldProps> = ({
 	if (inSysFormContext) controllerSysForm.setRefComponent(refObject!);
 	const schema = refObject?.current.schema;
 
-	label = label || schema?.label;
+	const label = ''; // Força a label a ser vazia
 	mask = mask || schema?.mask;
 	min = min || schema?.min;
 	max = max || schema?.max;
@@ -116,7 +116,7 @@ const SysTextField: React.FC<ISysTextFieldProps> = ({
 	if (readOnly)
 		return (
 			<SysViewField
-				label={label}
+				label={''}
 				placeholder={valueState || '-'}
 				showLabelAdornment={showLabelAdornment}
 				labelAdornment={labelAdornment}
@@ -125,19 +125,73 @@ const SysTextField: React.FC<ISysTextFieldProps> = ({
 
 	return (
 		<SysLabelView
-			label={label}
+			label={''}
 			showLabelAdornment={showLabelAdornment}
 			labelAdornment={labelAdornment}
 			disabled={disabled}
 			showTooltip={showTooltip}
 			tooltipMessage={tooltipMessage}
-			tooltipPosition={tooltipPosition}>
+			tooltipPosition={tooltipPosition}
+		>
 			<TextField
 				{...otherProps}
+				label={''}
 				name={name}
 				id={name}
 				key={name}
-				sx={sxMap?.textField}
+				sx={{
+					...(sxMap?.textField || {}),
+					width: '100%',
+					height: '55px',
+					fontSize: '1rem',
+					background: 'transparent', // Fundo transparente para seguir o padrão
+					paddingInline: '10px 10px',
+					color: '#fff',
+					border: '2px solid #fff',
+					borderRadius: '30px',
+					outline: 'none',
+					'& .MuiOutlinedInput-root': {
+						'& fieldset': {
+							borderColor: 'transparent',
+						},
+						'&:hover fieldset': {
+							borderColor: 'transparent',
+						},
+						'&.Mui-focused fieldset': {
+							border: 'transparent',
+							borderWidth: 2,
+						},
+						'& input': {
+							color: '#fff', // Texto branco
+						},
+						// Estilo para autocompletado
+						'&:-webkit-autofill': {
+							'-webkit-text-fill-color': '#fff', // Texto branco no autocompletado
+							'-webkit-box-shadow': '0 0 0px 1000px transparent inset', // Remove fundo branco
+							transition: 'background-color 5000s ease-in-out 0s', // Evita animação do fundo
+						},
+						'&:-webkit-autofill:focus': {
+							'-webkit-text-fill-color': '#fff', // Texto branco quando focado
+							'-webkit-box-shadow': '0 0 0px 1000px transparent inset',
+						},
+					},
+					'& .MuiInputLabel-root': {
+						color: '#fff',
+						'&.Mui-focused': {
+							color: '#fff',
+						},
+					},
+					'& input::placeholder': {
+						color: '#fff',
+						opacity: 1,
+					},
+					'& .MuiInputAdornment-root': {
+						color: '#fff',
+						'& .MuiSvgIcon-root': {
+							color: '#fff',
+						},
+					},
+				}}
 				value={valueState || ''}
 				onChange={onFieldChange}
 				error={!!errorState}

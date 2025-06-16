@@ -14,12 +14,13 @@ import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import LoginIcon from '@mui/icons-material/Login';
 
 const SignInPage: React.FC = () => {
 	const { showNotification } = useContext(AppLayoutContext);
 	const { user, signIn } = useContext<IAuthContext>(AuthContext);
 	const navigate = useNavigate();
-	const { Container, Content, FormContainer, FormWrapper, LoginHeader, LoginLabel, ForgotPasswordButton } = SignInStyles;
+	const { Container, Content, FormContainer, FormWrapper, LoginHeader, LoginLabel, ForgotPassword, FormField } = SignInStyles;
 
 	const handleSubmit = ({ email, password }: { email: string; password: string }) => {
 		signIn(email, password, (err) => {
@@ -51,40 +52,60 @@ const SignInPage: React.FC = () => {
 				<FormContainer>
 					<SysForm schema={signInSchema} onSubmit={handleSubmit} debugAlerts={false}>
 						<FormWrapper>
-							<SysTextField
-								variant="outlined"
-								name="email"
-								label="Email"
-								fullWidth
-								placeholder="Digite seu email"
-								endAdornment={
-									<EmailIcon />
-								}
-							/>
-							<SysTextField
-								variant="outlined"
-								label="Senha"
-								fullWidth
-								name="password"
-								placeholder="Digite sua senha"
-								type="password"
-								endAdornment={
-									<LockIcon />
-								}
-							/>
-							<ForgotPasswordButton variant="text" sx={{ alignSelf: 'flex-end' }} onClick={handleForgotPassword}>
-								<Typography variant="link" sx={{ textDecoration: 'none' }}>Esqueceu sua senha?</Typography>
-							</ForgotPasswordButton>
-							<Box />
+							<FormField>
+								<SysTextField
+									variant="outlined"
+									name="email"
+									label="Email"
+									fullWidth
+									autoComplete='off'
+									placeholder="Digite seu email"
+									endAdornment={
+										<EmailIcon />
+									}
+								/>
+								<SysTextField
+									variant="outlined"
+									label="Senha"
+									fullWidth
+									autoComplete='off'
+									name="password"
+									placeholder="Digite sua senha"
+									type="password"
+									endAdornment={
+										<LockIcon />
+									}
+								/>
+							</FormField>
+							<ForgotPassword variant="link" sx={{ alignSelf: 'flex-end', cursor: 'pointer', '&:hover': { textDecoration: 'underline', }, }} onClick={handleForgotPassword}>Esqueceu sua senha?</ForgotPassword>
 							<SysFormButton
 								variant="contained"
 								color="primary"
-								endIcon={<SysIcon name={'arrowForward'} />}>
+								endIcon={<LoginIcon />}>
 								Entrar
 							</SysFormButton>
-							<ForgotPasswordButton variant="text" sx={{ alignSelf: 'center' }} onClick={handleSignUp}>
-								<Typography variant="link" sx={{ textDecoration: 'none' }}>Não possui conta? Cadastrar</Typography>
-							</ForgotPasswordButton>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'center',
+									gap: 0.5,
+								}}
+							>
+								<ForgotPassword variant="link" sx={{ cursor: 'default' }}> Não tem cadastro? </ForgotPassword>
+								<ForgotPassword
+									onClick={handleSignUp}
+									sx={{
+										fontWeight: '700',
+										'&:hover': {
+											textDecoration: 'underline',
+										},
+									}}
+								>
+									Comece agora
+								</ForgotPassword>
+							</Box>
 						</FormWrapper>
 					</SysForm>
 				</FormContainer>

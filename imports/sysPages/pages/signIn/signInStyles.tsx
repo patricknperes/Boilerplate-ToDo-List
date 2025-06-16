@@ -10,9 +10,10 @@ interface ISignInStyles {
 	Content: React.ElementType;
 	LoginHeader: React.ElementType;
 	LoginLabel: React.ElementType;
-	ForgotPasswordButton: React.ElementType;
+	ForgotPassword: React.ElementType;
 	FormContainer: React.ElementType;
 	FormWrapper: React.ElementType;
+	FormField: React.ElementType;
 }
 
 const SignInStyles: ISignInStyles = {
@@ -22,11 +23,14 @@ const SignInStyles: ISignInStyles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		minHeight: '100vh',
-		backgroundColor: theme.palette.primary.main,
-		backgroundImage: 'url(/images/wireframe/liquid-cheese.svg)',
+		backgroundColor: 'Black',
+		backgroundImage: 'url(/images/wireframe/bg-florest.svg)',
 		backgroundSize: 'cover',
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
+		[theme.breakpoints.down('sm')]: {
+			padding: '0 1em',
+		},
 	})),
 
 	Content: styled(Box)(({ theme }) => ({
@@ -38,6 +42,16 @@ const SignInStyles: ISignInStyles = {
 		padding: '7.5em 2.5em 4em 2.5em',
 		color: theme.palette.primary.contrastText,
 		boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.3)',
+		animation: 'slideIn 0.8s ease-out',
+		'@keyframes slideIn': {
+			'0%': { transform: 'translateY(50px)', opacity: 0 },
+			'100%': { transform: 'translateY(0)', opacity: 1 },
+		},
+		[theme.breakpoints.down('md')]: {},
+		[theme.breakpoints.down('sm')]: {
+			width: '400px',
+			padding: '7.5em 2em 3em 2em',
+		},
 	})),
 
 	LoginHeader: styled(Box)(({ theme }) => ({
@@ -79,19 +93,22 @@ const SignInStyles: ISignInStyles = {
 	LoginLabel: styled(Typography)(({ theme }) => ({
 		fontSize: '30px',
 		color: 'black',
+		fontWeight: '500',
 	})),
 
-	ForgotPasswordButton: styled(Button)(({ theme }) => ({
-		alignSelf: 'flex-end',
+	ForgotPassword: styled(Typography)(({ theme }) => ({
+		alignSelf: 'center',
 		textTransform: 'none',
 		textDecoration: 'none',
 		padding: '0',
-		color: theme.palette.primary.contrastText,
+		cursor: 'pointer',
+		color: 'white',
 		fontSize: '15px',
 		borderRadius: sysSizing.radiusSm,
 		'&:hover': {
-			textDecoration: 'underline',
-			color: theme.palette.primary.contrastText,
+		},
+		[theme.breakpoints.down('sm')]: {
+			fontSize: '14px',
 		},
 	})),
 
@@ -99,7 +116,7 @@ const SignInStyles: ISignInStyles = {
 		width: '100%',
 		gap: '20px',
 		display: 'flex',
-		flexDirection: 'column',
+		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 	})),
@@ -110,8 +127,17 @@ const SignInStyles: ISignInStyles = {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		gap: theme.spacing(1)
-	}))
+		gap: '20px',
+	})),
+
+	FormField: styled(Box)(({ theme }) => ({
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: '25px',
+	})),
 };
 
 export default SignInStyles;
