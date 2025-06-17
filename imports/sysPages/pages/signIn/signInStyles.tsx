@@ -116,7 +116,7 @@ const SignInStyles: ISignInStyles = {
 		width: '100%',
 		gap: '20px',
 		display: 'flex',
-		flexDirection: 'row',
+		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 	})),

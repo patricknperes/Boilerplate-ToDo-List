@@ -20,12 +20,12 @@ export const ResetPassword = (props: IDefaultContainerProps) => {
 	const [loading, setLoading] = React.useState<boolean>(false);
 
 	const { token } = useParams();
-  const {
-    Container,
-    Content,
-    FormContainer,
-    FormWrapper,
-  } = SignInStyles;
+	const {
+		Container,
+		Content,
+		FormContainer,
+		FormWrapper,
+	} = SignInStyles;
 
 	const handleSubmit = (doc: { password: string; repassword: string }) => {
 		const { password, repassword } = doc;

@@ -103,15 +103,6 @@ export default ({
 					...appStyle.fieldContainer,
 					...(containerStyle ? containerStyle : {})
 				}}>
-				{label && !otherProps.rounded ? (
-					<SimpleLabelView
-						label={label}
-						style={style ? style.displayLabel : undefined}
-						help={help}
-						disabled={readOnly}
-					/>
-				) : null}
-
 				<TextField
 					{...otherProps}
 					key={name}
@@ -121,7 +112,6 @@ export default ({
 					disabled={!!readOnly}
 					id={name}
 					name={name}
-					label={otherProps.rounded ? label : null}
 					type={'text'}
 				/>
 			</div>
@@ -138,7 +128,6 @@ export default ({
 				disabled={!!readOnly}
 				id={name}
 				name={name}
-				label={otherProps.labelDisable ? undefined : label}
 				{...otherProps}
 			/>
 		);
@@ -153,10 +142,6 @@ export default ({
 				...appStyle.fieldContainer,
 				...(containerStyle ? containerStyle : { width: '100%' })
 			}}>
-			{label && !otherProps.rounded ? (
-				<SimpleLabelView label={label} help={help} style={style ? { displayLabel: style.displayLabel } : undefined} />
-			) : null}
-
 			<TextField
 				style={style}
 				{...otherProps}
@@ -168,7 +153,57 @@ export default ({
 				disabled={!!readOnly}
 				id={name}
 				name={name}
-				label={otherProps.rounded ? label : null}
+				sx={{
+					width: '100%',
+					fontSize: '1rem',
+					background: 'transparent', // Fundo transparente para seguir o padrão
+					paddingInline: '10px 10px',
+					color: '#fff',
+					border: '2px solid #fff',
+					borderRadius: '30px',
+					outline: 'none',
+					'& .MuiOutlinedInput-root': {
+						'& fieldset': {
+							borderColor: 'transparent',
+						},
+						'&:hover fieldset': {
+							borderColor: 'transparent',
+						},
+						'&.Mui-focused fieldset': {
+							border: 'transparent',
+							borderWidth: 2,
+						},
+						'& input': {
+							color: '#fff', // Texto branco
+						},
+						// Estilo para autocompletado
+						'&:-webkit-autofill': {
+							'-webkit-text-fill-color': '#fff', // Texto branco no autocompletado
+							'-webkit-box-shadow': '0 0 0px 1000px transparent inset', // Remove fundo branco
+							transition: 'background-color 5000s ease-in-out 0s', // Evita animação do fundo
+						},
+						'&:-webkit-autofill:focus': {
+							'-webkit-text-fill-color': '#fff', // Texto branco quando focado
+							'-webkit-box-shadow': '0 0 0px 1000px transparent inset',
+						},
+					},
+					'& .MuiInputLabel-root': {
+						color: '#fff',
+						'&.Mui-focused': {
+							color: '#fff',
+						},
+					},
+					'& input::placeholder': {
+						color: '#fff',
+						opacity: 1,
+					},
+					'& .MuiInputAdornment-root': {
+						color: '#fff',
+						'& .MuiSvgIcon-root': {
+							color: '#fff',
+						},
+					},
+				}}
 			/>
 
 			{inlineError && error && (

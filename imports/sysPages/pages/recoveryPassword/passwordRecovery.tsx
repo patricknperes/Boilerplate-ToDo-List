@@ -19,6 +19,8 @@ import { sysSizing } from '/imports/ui/materialui/styles';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
+import EmailIcon from '@mui/icons-material/Email';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export const PasswordRecovery = (props: IDefaultContainerProps) => {
 	const [loading, setLoading] = React.useState<boolean>(false);
@@ -26,12 +28,14 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 
 	const { showNotification } = useContext(AppLayoutContext);
 	const navigate = useNavigate();
-  const {
-    Container,
-    Content,
-    FormContainer,
-    FormWrapper,
-  } = SignInStyles;
+	const {
+		Container,
+		Content,
+		FormContainer,
+		FormWrapper,
+		LoginHeader,
+		LoginLabel,
+	} = SignInStyles;
 
 	const handleSubmit = (doc: { email: string }) => {
 		const { email } = doc;
@@ -79,22 +83,18 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1}>
-					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
-						{'{'}
-					</Typography>
-					Boilerplate
-					<Typography variant="inherit" color="sysText.tertiary">
-						{'}'}
-					</Typography>
-				</Typography>
+				<LoginHeader>
+					<LoginLabel>
+						Login
+					</LoginLabel>
+				</LoginHeader>
 
 				<FormContainer>
-					<Typography variant="h5" color={(theme) => theme.palette.sysText?.title}>
+					<Typography variant="h5" sx={{ color: '#fff' }}>
 						{!msg ? 'Esqueceu sua senha?' : 'Agora é só aguardar!'}
 					</Typography>
 
-					<Typography variant="body1" color={(theme) => theme.palette.sysText?.body} sx={{ textAlign: 'center' }}>
+					<Typography variant="body1" sx={{ textAlign: 'center', color: '#fef' }}>
 						{!msg
 							? 'Confirme seu e-mail abaixo para receber um link de redefinição da sua senha'
 							: 'Caso o e-mail informado esteja cadastrado no sistema, enviaremos um link para a redefinição de sua senha'}
@@ -102,31 +102,59 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 					<SimpleForm schema={schema} onSubmit={handleSubmit} styles={{ display: !msg ? 'block' : 'none' }}>
 						<FormWrapper>
 							<TextField
-								label="Email"
+								variant="outlined"
+								// label="Email"
 								fullWidth={true}
 								name="email"
 								type="email"
 								placeholder="Digite seu email"
 								disabled={loading}
+								endAdornment={
+									<EmailIcon />
+								}
 							/>
 							<Box />
-							<Box sx={{ display: 'flex', gap: sysSizing.spacingFixedMd }}>
+							<Box sx={{ display: 'flex', gap: '7rem', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
 								<Button
 									onClick={() => navigate('/')}
-									variant="outlined"
-									color="primary"
+									variant="text"
 									id="cancelar"
 									disabled={loading}
-									startIcon={<SysIcon name={'close'} />}
-									sx={{ transition: 'all 0.3s ease' }}>
-									{loading ? <CircularProgress size={24} /> : 'Cancelar'}
+									startIcon={<ArrowBackIcon />}
+									sx={{
+										transition: 'all 0.3s ease',
+										padding: '0',
+										color: 'white',
+										fontWeight: '400',
+										"&:hover": {
+											backgroundColor: 'transparent',
+											color: '#fff',
+										},
+									}}>
+									{loading ? <CircularProgress size={24} /> : 'Voltar'}
 								</Button>
 								<Button
 									variant="contained"
 									color="primary"
 									id="submit"
 									startIcon={<SysIcon name={'check'} />}
-									sx={{ transition: 'all 0.3s ease', display: loading ? 'none' : 'flex' }}>
+									sx={{
+										transition: 'all 0.3s ease',
+										display: loading ? 'none' : 'flex',
+										width: '100%',
+										height: '50px',
+										backgroundColor: 'white',
+										color: 'black',
+										fontSize: '16px',
+										fontWeight: '600',
+										border: 'none',
+										borderRadius: '30px',
+										cursor: 'pointer',
+										'&:hover': {
+											backgroundColor: '#f0f0f0',
+											border: 'none',
+										},
+									}}>
 									{loading ? <CircularProgress size={24} /> : 'Confirmar'}
 								</Button>
 							</Box>
@@ -137,13 +165,15 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 						variant="contained"
 						color="primary"
 						id="cancelar"
-						startIcon={<SysIcon name={'arrowBack'}/>}
-						sx={{ transition: 'all 0.3s ease', display: !msg ? 'none' : 'flex' }}>
+						startIcon={<SysIcon name={'arrowBack'} />}
+						sx={{
+							transition: 'all 0.3s ease',
+							display: !msg ? 'none' : 'flex',
+						}}>
 						{loading ? <CircularProgress size={24} /> : 'Voltar para o Login'}
+
 					</Button>
 				</FormContainer>
-
-				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
 			</Content>
 		</Container>
 	);

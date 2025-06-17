@@ -142,7 +142,6 @@ const SysTextField: React.FC<ISysTextFieldProps> = ({
 				sx={{
 					...(sxMap?.textField || {}),
 					width: '100%',
-					height: '55px',
 					fontSize: '1rem',
 					background: 'transparent', // Fundo transparente para seguir o padrão
 					paddingInline: '10px 10px',

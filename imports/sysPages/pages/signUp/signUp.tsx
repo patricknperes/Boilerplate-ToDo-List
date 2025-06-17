@@ -10,10 +10,13 @@ import TextField from '/imports/ui/components/SimpleFormFields/TextField/TextFie
 import Button from '@mui/material/Button';
 import { userprofileApi } from '../../../modules/userprofile/api/userProfileApi';
 import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
-
 import { signUpStyle } from './signUpStyle';
+import SignInStyles from '../signIn/signInStyles';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
+
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;
@@ -23,6 +26,7 @@ interface ISignUp {
 
 export const SignUp = (props: ISignUp) => {
 	const { showNotification } = props;
+	const { Container, Content, FormContainer, FormWrapper, LoginHeader, LoginLabel, ForgotPassword, FormField } = SignInStyles;
 
 	const handleSubmit = (doc: { email: string; password: string }) => {
 		const { email, password } = doc;
@@ -48,39 +52,98 @@ export const SignUp = (props: ISignUp) => {
 	};
 
 	return (
-		<Container style={signUpStyle.containerSignUp}>
-			<Box sx={signUpStyle.labelRegisterSystem}>
-				<img src="/images/wireframe/logo.png" style={signUpStyle.imageLogo} />
-				{'Cadastrar no sistema'}
-			</Box>
-			<SimpleForm
-				schema={{
-					email: {
-						type: String,
-						label: 'Email',
-						optional: false
-					},
-					password: {
-						type: String,
-						label: 'Senha',
-						optional: false
-					}
-				}}
-				onSubmit={handleSubmit}>
-				<TextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
-				<TextField id="Senha" label="Senha" fullWidth name="password" placeholder="Digite uma senha" type="password" />
-				<Box sx={signUpStyle.containerButtonOptions}>
-					<Button color={'primary'} variant={'outlined'} id="submit">
-						Cadastrar
-					</Button>
-				</Box>
-			</SimpleForm>
-			<Box sx={signUpStyle.containerRouterSignIn}>
-				Já tem uma conta? Faça login clicando{' '}
-				<Link to="/signin" color={'secondary'}>
-					aqui
-				</Link>
-			</Box>
+		<Container>
+			<Content>
+				<LoginHeader>
+					<LoginLabel>
+						Login
+					</LoginLabel>
+				</LoginHeader>
+				<FormContainer>
+					<SimpleForm
+						schema={{
+							email: {
+								type: String,
+								label: 'Email',
+								optional: false
+							},
+							password: {
+								type: String,
+								label: 'Senha',
+								optional: false
+							}
+						}}
+						onSubmit={handleSubmit}>
+						<FormWrapper>
+							<FormField>
+								<TextField
+									variant="outlined"
+									id="Email"
+									fullWidth
+									name="email"
+									type="email"
+									placeholder="Digite um email"
+									InputProps={{
+										endAdornment: <EmailIcon sx={{ color: 'white' }} />
+									}}
+								/>
+								<TextField
+									variant="outlined"
+									id="Senha"
+									fullWidth
+									name="password"
+									placeholder="Digite uma senha"
+									type="password"
+									InputProps={{
+										endAdornment: <LockIcon sx={{ color: 'white' }} />
+									}}
+								/>
+							</FormField>
+							<Button
+								color={'primary'}
+								variant={'outlined'}
+								id="submit"
+								sx={{
+									width: '100%',
+									height: '50px',
+									backgroundColor: 'white',
+									color: 'black',
+									fontSize: '16px',
+									fontWeight: '600',
+									border: 'none',
+									borderRadius: '30px',
+									cursor: 'pointer',
+									transition: '0.3s',
+									'&:hover': {
+										backgroundColor: '#f0f0f0',
+										border: 'none',
+										color: 'black',
+									},
+								}}
+							>
+								Cadastrar
+							</Button>
+
+						</FormWrapper>
+
+					</SimpleForm>
+					<ForgotPassword>
+						Já tem uma conta? {' '}
+						<Link
+							to="/signin"
+							style={{
+								textDecoration: 'none',
+								color: '#fff',
+								fontWeight: 700
+							}}
+							onMouseOver={e => (e.currentTarget.style.textDecoration = 'underline')}
+							onMouseOut={e => (e.currentTarget.style.textDecoration = 'none')}
+						>
+							Faça login
+						</Link>
+					</ForgotPassword>
+				</FormContainer>
+			</Content>
 		</Container>
 	);
 };

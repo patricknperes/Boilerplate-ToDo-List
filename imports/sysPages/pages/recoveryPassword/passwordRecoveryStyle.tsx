@@ -17,7 +17,6 @@
 export const passwordRecoveryStyle = {
 	containerRecoveryPassword: {
 		width: '100%',
-		maxWidth: 400
 	},
 	labelAccessSystem: {
 		textAlign: 'center',
